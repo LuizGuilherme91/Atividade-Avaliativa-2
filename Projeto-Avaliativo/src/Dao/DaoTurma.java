@@ -1,29 +1,28 @@
 package Dao;
 
-import Models.Periodo;
+import Models.Turma;
 import java.sql.*;
 
-
-public class DaoPeriodo implements DAO<Periodo, Integer> {
+public class DaoTurma implements DAO<Turma, Integer> {
     private final Connection connection;
 
-    public DaoPeriodo(Connection connection) {
+    public DaoTurma(Connection connection) {
         this.connection = connection;
     }
 
     @Override
-    public Boolean save(Periodo periodo) throws SQLException {
-        String sql = "INSERT INTO periodo (nome_periodo) VALUES (?)";
+    public Boolean save(Turma turma) throws SQLException {
+        String sql = "INSERT INTO turma (nome_turma) VALUES (?)";
 
         connection.setAutoCommit(false);
 
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, periodo.getNome_periodo());
+            ps.setString(1, turma.getNome_turma());
             ps.executeUpdate();
 
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
-                    periodo.setId(rs.getInt(1));
+                    turma.setId(rs.getInt(1));
                 } else {
                     return false;
                 }
@@ -36,14 +35,14 @@ public class DaoPeriodo implements DAO<Periodo, Integer> {
     }
 
     @Override
-    public Boolean update(Periodo periodo) throws SQLException {
-        String sql = "UPDATE periodo SET nome_periodo = ? WHERE id = ?";
+    public Boolean update(Turma turma) throws SQLException {
+        String sql = "UPDATE turma SET nome_turma = ? WHERE id = ?";
 
         connection.setAutoCommit(false);
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, periodo.getNome_periodo());
-            ps.setInt(2, periodo.getId());
+            ps.setString(1, turma.getNome_turma());
+            ps.setInt(2, turma.getId());
             ps.executeUpdate();
         }
 
@@ -53,17 +52,17 @@ public class DaoPeriodo implements DAO<Periodo, Integer> {
     }
 
     @Override
-    public java.util.Optional<Periodo> findById(Integer id) throws SQLException {
-        String sql = "SELECT * FROM periodo WHERE id = ?";
+    public java.util.Optional<Turma> findById(Integer id) throws SQLException {
+        String sql = "SELECT * FROM turma WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Periodo periodo = new Periodo();
-                    periodo.setId(rs.getInt("id"));
-                    periodo.setNome_periodo(rs.getString("nome_periodo"));
-                    return java.util.Optional.of(periodo);
+                    Turma turma = new Turma();
+                    turma.setId(rs.getInt("id"));
+                    turma.setNome_turma(rs.getString("nome_turma"));
+                    return java.util.Optional.of(turma);
                 }
             }
         }
@@ -72,28 +71,28 @@ public class DaoPeriodo implements DAO<Periodo, Integer> {
     }
 
     @Override
-    public java.util.List<Periodo> findAll() throws SQLException {
-        String sql = "SELECT * FROM periodo";
-        java.util.List<Periodo> periodos = new java.util.ArrayList<>();
+    public java.util.List<Turma> findAll() throws SQLException {
+        String sql = "SELECT * FROM turma";
+        java.util.List<Turma> turmas = new java.util.ArrayList<>();
 
         try (PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                periodos.add(mapPeriodo(rs));
+                turmas.add(mapTurma(rs));
             }
         }
 
-        return periodos;
+        return turmas;
     }
 
     @Override
-    public Boolean delete(Periodo periodo) throws SQLException {
-        String sql = "DELETE FROM periodo WHERE id = ?";
+    public Boolean delete(Turma turma) throws SQLException {
+        String sql = "DELETE FROM turma WHERE id = ?";
 
         connection.setAutoCommit(false);
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, periodo.getId());
+            ps.setInt(1, turma.getId());
             ps.executeUpdate();
         }
 
@@ -102,11 +101,11 @@ public class DaoPeriodo implements DAO<Periodo, Integer> {
         return true;
     }
 
-    private Periodo mapPeriodo(ResultSet rs) throws SQLException {
-        Periodo periodo = new Periodo();
-        periodo.setId(rs.getInt("id"));
-        periodo.setNome_periodo(rs.getString("nome_periodo"));
-        return periodo;
+    private Turma mapTurma(ResultSet rs) throws SQLException {
+        Turma turma = new Turma();
+        turma.setId(rs.getInt("id"));
+        turma.setNome_turma(rs.getString("nome_turma"));
+        return turma;
     }
 
 }

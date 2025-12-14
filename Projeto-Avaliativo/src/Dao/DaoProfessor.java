@@ -103,6 +103,22 @@ public class DaoProfessor implements DAO<Professor, Integer>{
     }
 
     @Override
+    public java.util.List<Professor> findAll() throws SQLException {
+        String sql = "SELECT p.id, p.nome, p.endereco, p.telefone, p.email, pr.matricula " +
+                     "FROM pessoa p JOIN professor pr ON p.id = pr.id_pessoa";
+        java.util.List<Professor> professors = new java.util.ArrayList<>();
+
+        try (PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                professors.add(mapProfessor(rs));
+            }
+        }
+
+        return professors;
+    }
+
+    @Override
     public Boolean delete(Professor professor) throws SQLException {
         String sqlProfessor = "DELETE FROM professor WHERE id_pessoa = ?";
         String sqlPessoa = "DELETE FROM pessoa WHERE id = ?";
@@ -136,11 +152,4 @@ public class DaoProfessor implements DAO<Professor, Integer>{
         professor.setMatricula(rs.getString("matricula"));
         return professor;
     }
-
-    @Override
-    public List<Professor> findAll() throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
-    }
-
 }

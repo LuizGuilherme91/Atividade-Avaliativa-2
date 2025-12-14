@@ -53,52 +53,98 @@ public class DaoAluno implements DAO<Aluno, Integer> {
 
     @Override
     public Boolean update(Aluno aluno) throws SQLException {
-        String sqlPessoa = "UPDATE pessoa SET nome = ?, endereco = ?, telefone = ?, email = ? WHERE id = ?";
-        String sqlAluno = "UPDATE aluno SET nome_pai = ?, nome_mae = ? WHERE matricula = ?";
+
+        String sqlPessoa = """
+            UPDATE pessoa p
+            SET
+                nome = ?,
+                endereco = ?,
+                telefone = ?,
+                email = ?
+            FROM aluno a
+            WHERE a.id_pessoa = p.id
+              AND a.matricula = ?
+            """;
+
+        String sqlAluno = """
+            UPDATE aluno
+            SET
+                nome_pai = ?,
+                nome_mae = ?
+            WHERE matricula = ?
+            """;
 
         connection.setAutoCommit(false);
 
-        try (PreparedStatement ps = connection.prepareStatement(sqlPessoa)) {
-            ps.setString(1, aluno.getNome());
-            ps.setString(2, aluno.getEndereco());
-            ps.setString(3, aluno.getTelefone());
-            ps.setString(4, aluno.getEmail());
-            ps.setInt(5, aluno.getId());
-            ps.executeUpdate();
-        }
+        try {
+            // Atualiza pessoa
+            try (PreparedStatement ps = connection.prepareStatement(sqlPessoa)) {
+                ps.setString(1, aluno.getNome());
+                ps.setString(2, aluno.getEndereco());
+                ps.setString(3, aluno.getTelefone());
+                ps.setString(4, aluno.getEmail());
+                ps.setString(5, aluno.getMatricula());
 
-        try (PreparedStatement ps = connection.prepareStatement(sqlAluno)) {
-            ps.setString(1, aluno.getNomePai());
-            ps.setString(2, aluno.getNomeMae());
-            ps.setString(3, aluno.getMatricula());
-            ps.executeUpdate();
-        }
+                ps.executeUpdate();
+            }
 
-        connection.commit();
-        connection.setAutoCommit(true);
-        return true;
+            // Atualiza aluno
+            try (PreparedStatement ps = connection.prepareStatement(sqlAluno)) {
+                ps.setString(1, aluno.getNomePai());
+                ps.setString(2, aluno.getNomeMae());
+                ps.setString(3, aluno.getMatricula());
+
+                ps.executeUpdate();
+            }
+
+            connection.commit();
+            return true;
+
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(true);
+        }
     }
 
-    @Override
-    public Optional<Aluno> findById(Integer idPessoa) throws SQLException {
-        String sql = "SELECT p.*, a.matricula, a.nome_pai, a.nome_mae FROM pessoa p " +
-                     "JOIN aluno a ON a.id_pessoa = p.id WHERE p.id = ?";
+	@Override
+    public Optional<Aluno> findById(Integer matricula) throws SQLException {
+    	String sql =
+    		    "SELECT " +
+    		    "a.matricula, a.nome_pai, a.nome_mae, " +
+    		    "p.id, p.nome, p.endereco, p.telefone, p.email " +
+    		    "FROM aluno a " +
+    		    "JOIN pessoa p ON p.id = a.id_pessoa " +
+    		    "WHERE a.matricula = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, idPessoa);
+            ps.setString(1, String.format("%d",matricula));
+
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return Optional.of(mapAluno(rs));
                 }
             }
         }
+
         return Optional.empty();
     }
 
     @Override
     public List<Aluno> findAll() throws SQLException {
-        String sql = "SELECT p.*, a.matricula, a.nome_pai, a.nome_mae FROM pessoa p " +
-                     "JOIN aluno a ON a.id_pessoa = p.id";
+        String sql = "SELECT " +
+        	    "    a.matricula, " +
+        	    "    a.nome_pai, " +
+        	    "    a.nome_mae, " +
+        	    "    p.id, " +
+        	    "    p.nome, " +
+        	    "    p.endereco, " +
+        	    "    p.telefone, " +
+        	    "    p.email " +
+        	    "FROM aluno a " +
+        	    "JOIN pessoa p ON p.id = a.id_pessoa " +
+        	    "ORDER BY p.nome";
 
         List<Aluno> alunos = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(sql);

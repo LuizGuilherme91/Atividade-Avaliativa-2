@@ -29,6 +29,8 @@ public class DaoDisciplina implements DAO<Disciplina, Integer>{
             }
         }
 
+        connection.commit();
+        connection.setAutoCommit(true);
         return true;
     }
 
@@ -36,12 +38,17 @@ public class DaoDisciplina implements DAO<Disciplina, Integer>{
     public Boolean update(Disciplina disciplina) throws SQLException {
         String sql = "UPDATE disciplina SET nome_disciplina = ? WHERE id = ?";
 
+        connection.setAutoCommit(false);
+
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, disciplina.getNome_disciplina());
             ps.setInt(2, disciplina.getId());
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
+            ps.executeUpdate();
         }
+
+        connection.commit();
+        connection.setAutoCommit(true);
+        return true;
     }
 
     @Override
@@ -71,10 +78,7 @@ public class DaoDisciplina implements DAO<Disciplina, Integer>{
         try (PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                Disciplina disciplina = new Disciplina();
-                disciplina.setId(rs.getInt("id"));
-                disciplina.setNome_disciplina(rs.getString("nome_disciplina"));
-                disciplinas.add(disciplina);
+                disciplinas.add(mapDisciplina(rs));
             }
         }
 
@@ -85,11 +89,16 @@ public class DaoDisciplina implements DAO<Disciplina, Integer>{
     public Boolean delete(Disciplina disciplina) throws SQLException {
         String sql = "DELETE FROM disciplina WHERE id = ?";
 
+        connection.setAutoCommit(false);
+
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, disciplina.getId());
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
+            ps.executeUpdate();
         }
+
+        connection.commit();
+        connection.setAutoCommit(true);
+        return true;
     }
 
     private Disciplina mapDisciplina(ResultSet rs) throws SQLException {

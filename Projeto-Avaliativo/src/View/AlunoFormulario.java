@@ -1,9 +1,12 @@
 package View;
 import javax.swing.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
  
 
 public class AlunoFormulario {
+	
+	
     public Map<String, String> mostrarFormulario() {
         // Campos de entrada
         JTextField nome = new JTextField(15);
@@ -17,23 +20,30 @@ public class AlunoFormulario {
         // Painel com layout vertical
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-        // Adicionando os campos com rótulo
-        Map<String, JTextField> map =  Map.of(
-        	    "Nome:", nome,
-        	    "Endereco:", endereco,
-        	    "Telefone:", telefone,
-        	    "Email:", email,
-        	    "Matricula:", matricula,
-        	    "Nome do pai:", nomePai,
-        	    "Nome da mae:", nomeMae        	    
-        	);
         
-        for (Map.Entry<String, JTextField> entry : map.entrySet()) {
-        	panel.add(new JLabel(entry.getKey()));
-            panel.add(entry.getValue());
-            panel.add(Box.createVerticalStrut(10));
-        }
+        panel.add(new JLabel("Nome:"));
+        panel.add(nome);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(new JLabel("Endereco:"));
+        panel.add(endereco);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(new JLabel("Telefone:"));
+        panel.add(telefone);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(new JLabel("Email:"));
+        panel.add(email);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(new JLabel("Matricula:"));
+        panel.add(matricula);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(new JLabel("Nome do pai:"));
+        panel.add(nomePai);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(new JLabel("Nome da mae:"));
+        panel.add(nomeMae);
+        panel.add(Box.createVerticalStrut(10)); 
+           
+        
         
 
         // Mostrar o formulário

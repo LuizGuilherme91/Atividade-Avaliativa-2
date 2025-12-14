@@ -5,6 +5,7 @@ import Controller.util.*;
 import Models.Aluno;
 
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -20,11 +21,15 @@ public class AlunoController {
 
     // CREATE
     public Boolean criarAluno(Map<String, String> dados) {
-        try {
-        	if(validarDados(dados)) {return false;}
-            
+        try {        	
+        	if(!validarDados(dados)) {
+        		return false;
+        		
+        	}            
             Aluno aluno = buildAluno(dados);
             return daoAluno.save(aluno);
+            
+         
         } catch (Exception e) {
         	//inserir logica de log
             System.err.println("Erro ao criar aluno: " + e.getMessage());
@@ -36,21 +41,37 @@ public class AlunoController {
     }
 
     // READ
-    public Optional<Aluno> buscarAluno(Integer id) {
+    public Map<String, String> buscarAluno(String stringId) {
+    	Integer id = Integer.parseInt(stringId);
         try {
-            return daoAluno.findById(id);
+        	
+        	if (daoAluno.findById(id).isPresent()) {
+        		Aluno aluno = daoAluno.findById(id).get();
+        		Map<String, String> mapAluno = buildMap(aluno);
+        		return mapAluno;
+        	
+        	}
+        	
+        	return null;
+             
         } catch (Exception e) {
-        	Util.log("Erro ao buscar aluno: " + e.getMessage());
+        	Util.log("Erro ao buscar aluno: " + e.getStackTrace());
             System.err.println("Erro ao buscar aluno: " + e.getMessage());
-            return Optional.empty();
+            return null;
         } finally {
             PostgresConnection.closeConnection();
         }
     }
 
-    public List<Aluno> listarAlunos() {
+    public List<Map<String, String>> listarAlunos() {
         try {
-            return daoAluno.findAll();
+        	List<Aluno> listAluno =	daoAluno.findAll();
+        	if(listAluno != null && !listAluno.isEmpty()) {        		
+        		List<Map<String, String>> listaMap = listAluno.stream().map(this::buildMap).toList();
+        		return listaMap;
+        	}
+        	
+            return List.of();
         } catch (Exception e) {
         	Util.log("Erro ao listar aluno: " + e.getMessage());
             System.err.println("Erro ao listar alunos: " + e.getMessage());
@@ -63,12 +84,15 @@ public class AlunoController {
     // UPDATE
     public Boolean atualizarAluno(Map<String, String> dados) {
         try {
-        	if(validarDados(dados)) {return false;}
+        	if(!validarDados(dados)) {
+        		return false;
+        	}
             Aluno aluno = buildAluno(dados);
             return daoAluno.update(aluno);
         } catch (Exception e) {
         	Util.log("Erro ao atualizar aluno: " + e.getMessage());
             System.err.println("Erro ao atualizar aluno: " + e.getMessage());
+            e.printStackTrace(System.err);
             return false;
         } finally {
             PostgresConnection.closeConnection();
@@ -76,15 +100,11 @@ public class AlunoController {
     }
 
     // DELETE
-    public Boolean deletarAluno(Integer id, String matricula) {
+    public Boolean deletarAluno(String matricula) {
         try {
-            Optional<Aluno> alunoOpt = daoAluno.findById(id);
+            Optional<Aluno> alunoOpt = daoAluno.findById(Integer.parseInt(matricula));
             if (alunoOpt.isPresent()) {
-                Aluno aluno = alunoOpt.get();
-                if (!aluno.getMatricula().equals(matricula)) {
-                    System.err.println("Matrícula não corresponde ao ID");
-                    return false;
-                }
+                Aluno aluno = alunoOpt.get();                
                 return daoAluno.delete(aluno);
             } else {
                 System.err.println("Aluno não encontrado");
@@ -102,19 +122,60 @@ public class AlunoController {
     // =========================
     // HELPERS
     // =========================
-    private Boolean validarDados(Map<String, String> dados) {
-    	if(!Validator.validarNome(dados.get("nome"))){return false;};
-    	if(!Validator.validarEndereco(dados.get("endereco"))){return false;};
-    	if(!Validator.validarTelefone(dados.get("telefone"))){return false;};
-    	if(!Validator.validarEmail(dados.get("email"))){return false;};
-    	if(!Validator.validarMatricula(dados.get("matricula"))){return false;};
-    	if(!Validator.validarNome(dados.get("nomePai"))){return false;};
-    	if(!Validator.validarNome(dados.get("nomeMae"))){return false;};
-    	return true;
-    	
-    	
+    private boolean validarDados(Map<String, String> dados) {
+
+        if (!Validator.validarNome(dados.get("nome"))) {
+        	System.out.println("validarNome falhou");
+            return false;
+        }
+
+        if (!Validator.validarEndereco(dados.get("endereco"))) {
+        	System.out.println("validarEndereco falhou");
+            return false;
+        }
+
+        if (!Validator.validarTelefone(dados.get("telefone"))) {
+        	System.out.println("validarTelefone falhou");
+            return false;
+        }
+
+        if (!Validator.validarEmail(dados.get("email"))) {
+        	System.out.println("validarEmail falhou");
+            return false;
+        }
+
+        if (!Validator.validarMatricula(dados.get("matricula"))) {
+        	System.out.println("validarMatricula falhou");
+            return false;
+        }
+
+        if (!Validator.validarNome(dados.get("nomePai"))) {
+        	System.out.println("validarNome falhou");
+            return false;
+        }
+
+        if (!Validator.validarNome(dados.get("nomeMae"))) {
+        	System.out.println("validarNome falhou");
+            return false;
+        }
+
+        return true;
     }
 
+    
+    private Map<String, String> buildMap(Aluno aluno) {
+    	Map<String, String> mapAluno =new HashMap<>();
+    	mapAluno.put("id", String.format("%d",aluno.getId()));
+    	mapAluno.put("nome", aluno.getNome());
+    	mapAluno.put("endereco", aluno.getEndereco());
+    	mapAluno.put("telefone", aluno.getTelefone());
+    	mapAluno.put("email", aluno.getEmail());
+    	mapAluno.put("matricula", aluno.getMatricula());
+    	mapAluno.put("nomePai", aluno.getNomePai());
+    	mapAluno.put("nomeMae", aluno.getNomeMae());
+    	return mapAluno;
+    }
+    
     private Aluno buildAluno(Map<String, String> dados) {
         Aluno aluno = new Aluno();
 
