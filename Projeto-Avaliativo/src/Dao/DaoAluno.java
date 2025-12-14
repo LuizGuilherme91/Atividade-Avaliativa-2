@@ -4,6 +4,7 @@ import Models.Aluno;
 import java.sql.*;
 import java.util.*;
 
+
 public class DaoAluno implements DAO<Aluno, Integer> {
 
     private final Connection connection;
@@ -14,8 +15,9 @@ public class DaoAluno implements DAO<Aluno, Integer> {
 
     @Override
     public Boolean save(Aluno aluno) throws SQLException {
-        String sqlPessoa = "INSERT INTO pessoa (nome, endereco, telefone, email) VALUES (?, ?, ?, ?)";
-        String sqlAluno = "INSERT INTO aluno (matricula, id_pessoa, nome_pai, nome_mae) VALUES (?, ?, ?, ?)";
+    	String sqlPessoa = "INSERT INTO Pessoa (nome, endereco, telefone, email) VALUES (?, ?, ?, ?)";
+    	String sqlAluno = "INSERT INTO Aluno (matricula, id, nome_pai, nome_mae) VALUES (?, ?, ?, ?)";
+
 
         connection.setAutoCommit(false);
 
@@ -54,25 +56,25 @@ public class DaoAluno implements DAO<Aluno, Integer> {
     @Override
     public Boolean update(Aluno aluno) throws SQLException {
 
-        String sqlPessoa = """
-            UPDATE pessoa p
-            SET
-                nome = ?,
-                endereco = ?,
-                telefone = ?,
-                email = ?
-            FROM aluno a
-            WHERE a.id_pessoa = p.id
-              AND a.matricula = ?
-            """;
+    	String sqlPessoa = """
+    		    UPDATE Pessoa p
+    		    SET
+    		        nome = ?,
+    		        endereco = ?,
+    		        telefone = ?,
+    		        email = ?
+    		    FROM Aluno a
+    		    WHERE a.id = p.id
+    		      AND a.matricula = ?
+    		    """;
 
-        String sqlAluno = """
-            UPDATE aluno
-            SET
-                nome_pai = ?,
-                nome_mae = ?
-            WHERE matricula = ?
-            """;
+    		String sqlAluno = """
+    		    UPDATE Aluno
+    		    SET
+    		        nome_pai = ?,
+    		        nome_mae = ?
+    		    WHERE matricula = ?
+    		    """;
 
         connection.setAutoCommit(false);
 
@@ -110,13 +112,14 @@ public class DaoAluno implements DAO<Aluno, Integer> {
 
 	@Override
     public Optional<Aluno> findById(Integer matricula) throws SQLException {
-    	String sql =
-    		    "SELECT " +
-    		    "a.matricula, a.nome_pai, a.nome_mae, " +
-    		    "p.id, p.nome, p.endereco, p.telefone, p.email " +
-    		    "FROM aluno a " +
-    		    "JOIN pessoa p ON p.id = a.id_pessoa " +
-    		    "WHERE a.matricula = ?";
+		String sql =
+			    "SELECT " +
+			    "    a.matricula, a.nome_pai, a.nome_mae, " +
+			    "    p.id, p.nome, p.endereco, p.telefone, p.email " +
+			    "FROM Aluno a " +
+			    "JOIN Pessoa p ON a.id = p.id " +
+			    "WHERE a.matricula = ?";
+
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, String.format("%d",matricula));
@@ -133,18 +136,18 @@ public class DaoAluno implements DAO<Aluno, Integer> {
 
     @Override
     public List<Aluno> findAll() throws SQLException {
-        String sql = "SELECT " +
-        	    "    a.matricula, " +
-        	    "    a.nome_pai, " +
-        	    "    a.nome_mae, " +
-        	    "    p.id, " +
-        	    "    p.nome, " +
-        	    "    p.endereco, " +
-        	    "    p.telefone, " +
-        	    "    p.email " +
-        	    "FROM aluno a " +
-        	    "JOIN pessoa p ON p.id = a.id_pessoa " +
-        	    "ORDER BY p.nome";
+    	String sql = "SELECT " +
+                "    a.matricula, " +
+                "    a.nome_pai, " +
+                "    a.nome_mae, " +
+                "    p.id, " +
+                "    p.nome, " +
+                "    p.endereco, " +
+                "    p.telefone, " +
+                "    p.email " +
+                "FROM Aluno a " +
+                "JOIN Pessoa p ON a.id = p.id " +
+                "ORDER BY p.nome";
 
         List<Aluno> alunos = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(sql);
