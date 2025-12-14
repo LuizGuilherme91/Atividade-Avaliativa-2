@@ -10,18 +10,14 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Vector;
 
 public class TelaAluno extends JFrame {
 
     private final ControllerAluno controller;
     private DefaultTableModel tableModel;
 
-    // Campos de Texto
     private JTextField txtId, txtNome, txtEndereco, txtTelefone, txtEmail, txtMatricula, txtNomePai, txtNomeMae;
 
-    // Estilos
-    private static final Color COR_FUNDO_JANELA = new Color(240, 240, 240); // Claro para telas de CRUD
     private static final Font FONTE_LABEL = new Font("Segoe UI", Font.BOLD, 12);
     private static final Font FONTE_TITULO_CRUD = new Font("Segoe UI", Font.BOLD, 20);
 
@@ -32,7 +28,7 @@ public class TelaAluno extends JFrame {
         setSize(800, 700);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        getContentPane().setBackground(COR_FUNDO_JANELA);
+        getContentPane().setBackground(new Color(240, 240, 240));
         setLayout(new BorderLayout(10, 10));
 
         // 1. Título
@@ -41,13 +37,13 @@ public class TelaAluno extends JFrame {
         titulo.setBorder(new EmptyBorder(15, 0, 15, 0));
         add(titulo, BorderLayout.NORTH);
 
-        // 2. Painel de Input (Centro Superior)
+        // 2. Painel de Input
         JPanel inputPanel = createInputPanel();
         
-        // 3. Painel de Botões (Centro Inferior)
+        // 3. Painel de Botões
         JPanel buttonPanel = createButtonPanel();
 
-        // 4. Painel de Tabela (Sul)
+        // 4. Painel de Tabela
         JScrollPane tableScrollPane = createTablePanel();
         
         JPanel centerPanel = new JPanel(new BorderLayout());
@@ -58,19 +54,20 @@ public class TelaAluno extends JFrame {
         add(centerPanel, BorderLayout.CENTER);
         add(tableScrollPane, BorderLayout.SOUTH);
 
-        loadTableData();
+        // Se o controller for nulo, este método falha, por isso verificamos a injeção no Main.java
+        loadTableData(); 
     }
 
     private JPanel createInputPanel() {
+        // ... (código GridBagLayout para campos de texto) ...
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createTitledBorder("Dados do Aluno"));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Inicialização dos campos
         txtId = new JTextField(5);
-        txtId.setEditable(true); // Permitir buscar por ID
+        txtId.setEditable(true);
 
         txtNome = new JTextField(20);
         txtEndereco = new JTextField(20);
@@ -80,7 +77,6 @@ public class TelaAluno extends JFrame {
         txtNomePai = new JTextField(20);
         txtNomeMae = new JTextField(20);
 
-        // Função auxiliar para adicionar label e campo
         int row = 0;
         row = addField(panel, gbc, "ID:", txtId, row, 0);
         row = addField(panel, gbc, "Nome:", txtNome, row, 0);
@@ -93,9 +89,8 @@ public class TelaAluno extends JFrame {
 
         return panel;
     }
-
+    
     private int addField(JPanel panel, GridBagConstraints gbc, String labelText, JTextField textField, int row, int col) {
-        // Label
         JLabel label = new JLabel(labelText);
         label.setFont(FONTE_LABEL);
         gbc.gridx = col;
@@ -103,14 +98,14 @@ public class TelaAluno extends JFrame {
         gbc.weightx = 0.0;
         panel.add(label, gbc);
 
-        // Campo de Texto
         gbc.gridx = col + 1;
         gbc.weightx = 1.0;
         panel.add(textField, gbc);
-        return row + (col == 0 ? 0 : 1);
+        return row + 1;
     }
     
     private JPanel createButtonPanel() {
+        // ... (código para botões) ...
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
 
         JButton btnSave = new JButton("Salvar");
@@ -132,16 +127,16 @@ public class TelaAluno extends JFrame {
     }
 
     private JScrollPane createTablePanel() {
+        // ... (código para a tabela) ...
         String[] columnNames = {"ID", "Nome", "Matrícula", "Email", "Telefone", "Endereço"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Torna a tabela não editável
+                return false;
             }
         };
         JTable table = new JTable(tableModel);
         
-        // Adiciona listener para popular campos ao clicar na linha
         table.getSelectionModel().addListSelectionListener(event -> {
             if (!event.getValueIsAdjusting() && table.getSelectedRow() != -1) {
                 populateFieldsFromTable(table.getSelectedRow());
@@ -153,13 +148,10 @@ public class TelaAluno extends JFrame {
         return scrollPane;
     }
 
-    // --- Métodos de CRUD e UI ---
-
     private void saveAluno() {
         try {
             Integer id = Integer.parseInt(txtId.getText());
             
-            // Reúne os dados na ordem esperada pelo ControllerAluno
             List<Object> dados = Arrays.asList(
                 id, 
                 txtNome.getText(), 
@@ -229,7 +221,7 @@ public class TelaAluno extends JFrame {
     }
 
     private void loadTableData() {
-        tableModel.setRowCount(0); // Limpa a tabela
+        tableModel.setRowCount(0);
         List<Aluno> alunos = controller.findAll();
 
         for (Aluno a : alunos) {
@@ -260,11 +252,8 @@ public class TelaAluno extends JFrame {
     }
     
     private void populateFieldsFromTable(int rowIndex) {
-        // Assume que a tabela armazena a matrícula completa
         try {
             Integer id = (Integer) tableModel.getValueAt(rowIndex, 0);
-            
-            // Busca o objeto completo para preencher todos os campos (Nome Pai/Mãe não estão na tabela)
             Optional<Aluno> alunoOpt = controller.findById(id);
             
             if (alunoOpt.isPresent()) {

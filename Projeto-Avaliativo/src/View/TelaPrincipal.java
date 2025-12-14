@@ -20,15 +20,39 @@ import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 
-// --- MOCK DE TELA FALTANTE (Para compilar se não estiver no mesmo projeto) ---
-// Se você estiver usando o código completo que enviei anteriormente, pode remover esta seção
-class TelaAluno extends JFrame {
-    public TelaAluno(ControllerAluno controller) {
-        setTitle("GERENCIAR ALUNOS (MOCK)");
+// --- MOCKS DE TELAS FALTANTES ---
+// (Necessário para compilar)
+class TelaPrioridade extends JFrame {
+    public TelaPrioridade() {
+        setTitle("GERENCIAR PRIORIDADES");
         setSize(400, 300);
         setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(45, 45, 45));
-        JLabel lbl = new JLabel("Tela Aluno (MOCK)", SwingConstants.CENTER);
+        JLabel lbl = new JLabel("Tela Prioridade (MOCK)", SwingConstants.CENTER);
+        lbl.setForeground(Color.WHITE);
+        getContentPane().add(lbl);
+    }
+}
+
+class TelaResponsavel extends JFrame {
+    public TelaResponsavel() {
+        setTitle("GERENCIAR RESPONSÁVEIS");
+        setSize(400, 300);
+        setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(45, 45, 45));
+        JLabel lbl = new JLabel("Tela Responsável (MOCK)", SwingConstants.CENTER);
+        lbl.setForeground(Color.WHITE);
+        getContentPane().add(lbl);
+    }
+}
+
+class TelaListaTarefas extends JFrame {
+    public TelaListaTarefas() {
+        setTitle("GERENCIAR LISTA DE TAREFAS");
+        setSize(400, 300);
+        setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(45, 45, 45));
+        JLabel lbl = new JLabel("Tela Lista de Tarefas (MOCK)", SwingConstants.CENTER);
         lbl.setForeground(Color.WHITE);
         getContentPane().add(lbl);
     }
@@ -38,39 +62,36 @@ class TelaAluno extends JFrame {
 public class TelaPrincipal extends JFrame {
 
     // --- Constantes de Estilo ---
-    private static final Color COR_FUNDO = new Color(45, 45, 45); // Cinza escuro
-    private static final Color COR_BOTAO = new Color(220, 220, 220); // Cinza BEM claro
-    private static final Color COR_TEXTO_BOTAO = new Color(30, 30, 30); // Texto escuro
+    private static final Color COR_FUNDO = new Color(45, 45, 45); 
+    private static final Color COR_BOTAO = new Color(220, 220, 220);
+    private static final Color COR_TEXTO_BOTAO = new Color(30, 30, 30);
     private static final Font FONTE_TITULO = new Font("Segoe UI", Font.BOLD, 28);
     private static final Font FONTE_BOTAO = new Font("Segoe UI", Font.BOLD, 16);
-    private static final Color COR_TEXTO_TITULO = Color.WHITE; // Branco para o título
+    private static final Color COR_TEXTO_TITULO = Color.WHITE;
 
-    // Dependência do Controller
     private final ControllerAluno controllerAluno;
-
-    // Construtor que recebe a dependência
+    
     public TelaPrincipal(ControllerAluno controllerAluno) {
         
-        this.controllerAluno = controllerAluno; // Armazena o Controller
+        this.controllerAluno = controllerAluno;
 
         setTitle("AtividadeAvaliativa - Menu");
         setSize(600, 450);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // --- 1. Painel Principal ---
+        // ... layout e estilo (o mesmo código que você já tinha) ...
+
         Container painelPrincipal = getContentPane();
         painelPrincipal.setBackground(COR_FUNDO);
         painelPrincipal.setLayout(new BorderLayout(15, 15));
 
-        // --- 2. Título ---
         JLabel titulo = new JLabel("Menu Principal", SwingConstants.CENTER);
         titulo.setFont(FONTE_TITULO);
         titulo.setForeground(COR_TEXTO_TITULO);
         titulo.setBorder(new EmptyBorder(30, 20, 20, 20));
         painelPrincipal.add(titulo, BorderLayout.NORTH);
 
-        // --- 3. Painel de Botões (Centralizado) ---
         JPanel painelCentral = new JPanel(new GridBagLayout());
         painelCentral.setBackground(COR_FUNDO);
 
@@ -81,46 +102,64 @@ public class TelaPrincipal extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
         
-        // CORREÇÃO 1: Instancia o botão antes de usá-lo
+        // Instanciação dos botões
         JButton btnCadastroAluno = new JButton("Gerenciar Alunos (CRUD)"); 
-        
-        // CORREÇÃO 2: Estiliza o botão instanciado
+        JButton btnPrioridade = new JButton("Gerenciar Prioridades");
+        JButton btnResponsavel = new JButton("Gerenciar Responsáveis");
+        JButton btnListaTarefas = new JButton("Gerenciar Lista de Tarefas");
+
         styleButton(btnCadastroAluno);
+        styleButton(btnPrioridade);
+        styleButton(btnResponsavel);
+        styleButton(btnListaTarefas);
 
-        painelCentral.add(btnCadastroAluno, gbc);
+        // Adiciona os botões
+        painelCentral.add(btnCadastroAluno, gbc); 
 
-        // Adiciona um separador vertical para centralizar
+        gbc.gridy++;
+        painelCentral.add(btnPrioridade, gbc);
+        
+        gbc.gridy++;
+        painelCentral.add(btnResponsavel, gbc);
+        
+        gbc.gridy++;
+        painelCentral.add(btnListaTarefas, gbc);
+
         gbc.gridy++;
         gbc.weighty = 1.0;
         painelCentral.add(Box.createVerticalGlue(), gbc);
 
         painelPrincipal.add(painelCentral, BorderLayout.CENTER);
 
-        // --- 4. Ações dos Botões ---
-        // CORREÇÃO 3: Passa o ControllerAluno para a TelaAluno
+        // --- Ações dos Botões ---
+        
+        // Ação principal, passando o controller
         btnCadastroAluno.addActionListener(e -> {
-            TelaAluno telaAluno = new TelaAluno(this.controllerAluno);
-            telaAluno.setVisible(true);
+            // Garante que o Controller não é null
+            if (this.controllerAluno != null) { 
+                TelaAluno telaAluno = new TelaAluno(this.controllerAluno); 
+                telaAluno.setVisible(true);
+            } else {
+                System.err.println("Erro: ControllerAluno não foi inicializado.");
+            }
         });
-
+        
+        btnPrioridade.addActionListener(e -> new TelaPrioridade().setVisible(true));
+        btnResponsavel.addActionListener(e -> new TelaResponsavel().setVisible(true));
+        btnListaTarefas.addActionListener(e -> new TelaListaTarefas().setVisible(true));
     }
 
     private void styleButton(JButton button) {
         button.setFont(FONTE_BOTAO);
         button.setBackground(COR_BOTAO);
-        button.setForeground(COR_TEXTO_BOTAO); // Define o texto para escuro
+        button.setForeground(COR_TEXTO_BOTAO);
         button.setFocusPainted(false);
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         button.setPreferredSize(new Dimension(280, 55));
 
-        // Borda cinza médio para combinar com o botão claro no fundo escuro
         button.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(new Color(150, 150, 150), 1), 
             new EmptyBorder(12, 25, 12, 25)
         ));
     }
-    
-    // É necessário ter uma classe Main ou no mínimo um método main para iniciar a aplicação, 
-    // passando o controller.
-
 }
