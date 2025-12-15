@@ -25,3 +25,4 @@
 [2025-12-15 15:16:59] Erro ao deletar aluno: Cannot parse null string
 [2025-12-15 15:58:04] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
 [2025-12-15 15:58:13] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:12:02] Erro ao criar aluno: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
