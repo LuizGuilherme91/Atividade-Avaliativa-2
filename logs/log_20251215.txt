@@ -1,0 +1,21 @@
+[2025-12-15 11:22:02] Erro ao criar Disciplina: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 11:22:12] Erro ao criar Disciplina: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 11:22:58] Erro ao criar Disciplina: Cannot parse null string
+[2025-12-15 11:25:35] Erro ao criar Disciplina: Cannot parse null string
+[2025-12-15 11:28:04] Erro ao criar Disciplina: ERRO: inserção ou atualização em tabela "disciplina" viola restrição de chave estrangeira "disciplina_id_professor_fkey"
+  Detalhe: Chave (id_professor)=(1234567890) não está presente na tabela "professor".
+[2025-12-15 11:32:51] Erro ao criar Disciplina: ERRO: inserção ou atualização em tabela "disciplina" viola restrição de chave estrangeira "disciplina_id_professor_fkey"
+  Detalhe: Chave (id_professor)=(987654321) não está presente na tabela "professor".
+[2025-12-15 11:44:39] Erro ao atualizar Disciplina: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 11:55:38] Erro ao listar aluno: ERRO: coluna a.id não existe
+  Dica: Talvez você queira fazer referência à coluna "p.id".
+  Posição: 153
+[2025-12-15 11:59:56] Erro ao deletar aluno: Cannot parse null string
+[2025-12-15 12:00:57] Erro ao criar Disciplina: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 12:07:28] Erro ao deletar aluno: Cannot parse null string
+[2025-12-15 12:12:10] Erro ao atualizar Professor: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 12:14:33] Erro ao criar Disciplina: ERRO: coluna "id_professor" da relação "disciplina" não existe
+  Posição: 42
+[2025-12-15 12:19:51] Erro ao deletar disciplina: Cannot parse null string
+[2025-12-15 12:20:11] Erro ao atualizar Disciplina: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 12:20:45] Erro ao atualizar Disciplina: Cannot invoke "java.util.Map.get(Object)" because "dados" is null

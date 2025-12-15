@@ -14,7 +14,7 @@ public class DaoDisciplina implements DAO<Disciplina, Integer> {
 
     @Override
     public Boolean save(Disciplina disciplina) throws SQLException {
-        String sql = "INSERT INTO Disciplina (nome_disciplina, id_professor) VALUES (?, ?)";
+        String sql = "INSERT INTO Disciplina (nome_disciplina, matricula_professor) VALUES (?, ?)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, disciplina.getNome_disciplina());
@@ -35,7 +35,7 @@ public class DaoDisciplina implements DAO<Disciplina, Integer> {
 
     @Override
     public Boolean update(Disciplina disciplina) throws SQLException {
-        String sql = "UPDATE Disciplina SET nome_disciplina = ?, id_professor = ? WHERE id = ?";
+        String sql = "UPDATE Disciplina SET nome_disciplina = ?, matricula_professor = ? WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, disciplina.getNome_disciplina());
@@ -49,7 +49,7 @@ public class DaoDisciplina implements DAO<Disciplina, Integer> {
 
     @Override
     public Optional<Disciplina> findById(Integer id) throws SQLException {
-        String sql = "SELECT id, nome_disciplina, id_professor FROM Disciplina WHERE id = ?";
+        String sql = "SELECT id, nome_disciplina, matricula_professor FROM Disciplina WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -66,7 +66,7 @@ public class DaoDisciplina implements DAO<Disciplina, Integer> {
 
     @Override
     public List<Disciplina> findAll() throws SQLException {
-        String sql = "SELECT id, nome_disciplina, id_professor FROM Disciplina ORDER BY nome_disciplina";
+        String sql = "SELECT id, nome_disciplina, matricula_professor FROM Disciplina ORDER BY nome_disciplina";
 
         List<Disciplina> disciplinas = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(sql);
@@ -98,7 +98,7 @@ public class DaoDisciplina implements DAO<Disciplina, Integer> {
         Disciplina disciplina = new Disciplina();
         disciplina.setId(rs.getInt("id"));
         disciplina.setNome_disciplina(rs.getString("nome_disciplina"));
-        disciplina.setProf_responsavel(rs.getInt("id_professor"));
+        disciplina.setProf_responsavel(rs.getInt("matricula_professor"));
         return disciplina;
     }
 }

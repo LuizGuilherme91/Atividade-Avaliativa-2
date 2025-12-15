@@ -33,7 +33,6 @@ public class PofessorFormulario {
         panel.add(Box.createVerticalStrut(10));
         panel.add(new JLabel("Matricula:"));
         panel.add(matricula);
-        panel.add(Box.createVerticalStrut(10));
         
            
         

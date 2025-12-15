@@ -51,6 +51,7 @@ public class DisciplinaController {
         	if (daoDisciplina.findById(id).isPresent()) {
         		Disciplina Disciplina = daoDisciplina.findById(id).get();
         		Map<String, String> mapDisciplina = buildMap(Disciplina);
+        		System.out.println(mapDisciplina.toString());
         		return mapDisciplina;
         	
         	}
@@ -127,7 +128,7 @@ public class DisciplinaController {
     // =========================
     private boolean validarDados(Map<String, String> dados) {
 
-        if (!Validator.validarNome(dados.get("nome"))) {
+        if (!Validator.validarEndereco(dados.get("nome"))) {
         	System.out.println("validarNome falhou");
             return false;
         }      
@@ -140,7 +141,7 @@ public class DisciplinaController {
     	Map<String, String> mapDisciplina =new HashMap<>();
     	mapDisciplina.put("id", String.format("%d",disciplina.getId()));
     	mapDisciplina.put("nome", disciplina.getNome_disciplina());
-    	mapDisciplina.put("nome", String.format("%d",disciplina.getProf_responsavel()));
+    	mapDisciplina.put("professor", String.format("%d",disciplina.getProf_responsavel()));
     	return mapDisciplina;
     }
     
@@ -152,7 +153,7 @@ public class DisciplinaController {
         }
 
         disciplina.setNome_disciplina(dados.get("nome"));
-        disciplina.setId(Integer.parseInt(dados.get("Professor")));
+        disciplina.setProf_responsavel(Integer.parseInt(dados.get("professor")));
                 
 
         return disciplina;

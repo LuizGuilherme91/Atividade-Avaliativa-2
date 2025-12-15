@@ -17,7 +17,7 @@ public class DaoProfessor implements DAO<Professor, Integer> {
     @Override
     public Boolean save(Professor professor) throws SQLException {
         String sqlPessoa = "INSERT INTO Pessoa (nome, endereco, telefone, email) VALUES (?, ?, ?, ?)";
-        String sqlProfessor = "INSERT INTO Professor (matricula, id) VALUES (?, ?)";
+        String sqlProfessor = "INSERT INTO Professor (matricula, id_pessoa) VALUES (?, ?)";
 
         connection.setAutoCommit(false);
 
@@ -62,14 +62,14 @@ public class DaoProfessor implements DAO<Professor, Integer> {
                 telefone = ?,
                 email = ?
             FROM Professor pr
-            WHERE pr.id = p.id
+            WHERE pr.id_pessoa = p.id
               AND pr.matricula = ?
             """;
 
         String sqlProfessor = """
             UPDATE Professor
             SET matricula = ?
-            WHERE id = ?
+            WHERE id_pessoa = ?
             """;
 
         connection.setAutoCommit(false);
@@ -106,10 +106,10 @@ public class DaoProfessor implements DAO<Professor, Integer> {
     @Override
     public Optional<Professor> findById(Integer id) throws SQLException {
         String sql = """
-            SELECT pr.matricula, p.id, p.nome, p.endereco, p.telefone, p.email 
-             FROM Professor pr 
-             JOIN Pessoa p ON pr.id = p.id 
-             WHERE pr.matricula = ?
+            SELECT pr.matricula, p.id, p.nome, p.endereco, p.telefone, p.email
+            FROM Professor pr
+            JOIN Pessoa p ON pr.id_pessoa = p.id
+            WHERE pr.matricula = ?
             """;
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -128,11 +128,9 @@ public class DaoProfessor implements DAO<Professor, Integer> {
     @Override
     public List<Professor> findAll() throws SQLException {
         String sql = """
-            SELECT 
-                pr.matricula, 
-                p.id, p.nome, p.endereco, p.telefone, p.email
+            SELECT pr.matricula, p.id, p.nome, p.endereco, p.telefone, p.email
             FROM Professor pr
-            JOIN Pessoa p ON pr.id = p.id
+            JOIN Pessoa p ON pr.id_pessoa = p.id
             ORDER BY p.nome
             """;
 
@@ -148,7 +146,7 @@ public class DaoProfessor implements DAO<Professor, Integer> {
 
     @Override
     public Boolean delete(Professor professor) throws SQLException {
-        String sqlProfessor = "DELETE FROM Professor WHERE id = ?";
+        String sqlProfessor = "DELETE FROM Professor WHERE id_pessoa = ?";
         String sqlPessoa = "DELETE FROM Pessoa WHERE id = ?";
 
         connection.setAutoCommit(false);

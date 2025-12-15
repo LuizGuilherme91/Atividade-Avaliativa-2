@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
  
 
-public class PofessorFormulario {
+public class DisciplinaFormulario {
 	
 	
     public Map<String, String> mostrarFormulario() {
@@ -17,7 +17,7 @@ public class PofessorFormulario {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         
-        panel.add(new JLabel("Nome:"));
+        panel.add(new JLabel("Nome disciplina:"));
         panel.add(nomeDiscplina);
         panel.add(Box.createVerticalStrut(10));
         panel.add(new JLabel("Matricula do professor:"));

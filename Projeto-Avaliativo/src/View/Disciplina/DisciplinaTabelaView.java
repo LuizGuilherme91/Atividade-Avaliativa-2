@@ -11,8 +11,7 @@ public class DisciplinaTabelaView {
 
         // Colunas da tabela
         String[] colunas = {
-            "Id", "Nome", "Endereço", "Telefone", "Email",
-            "Matrícula"
+            "Id", "Nome", "professor"
         };
 
         // Modelo da tabela (não editável)

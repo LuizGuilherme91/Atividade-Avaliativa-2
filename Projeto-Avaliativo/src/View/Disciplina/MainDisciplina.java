@@ -9,21 +9,21 @@ public class MainDisciplina {
 
     public static void main(String[] args) {
         // Criar a janela principal
-        JFrame frame = new JFrame("Tela Principal Professor");
+        JFrame frame = new JFrame("Tela Principal Disciplina");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 200);
         frame.setLocationRelativeTo(null);
 
         // Botão para abrir formulário
-        JButton botaoAbrirFormulario = new JButton("Cadastrar Professor");        
+        JButton botaoAbrirFormulario = new JButton("Cadastrar Disciplina");        
         // Ação do botão
         botaoAbrirFormulario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PofessorFormulario formulario = new PofessorFormulario();
+                DisciplinaFormulario formulario = new DisciplinaFormulario();
                 Map<String, String> map = formulario.mostrarFormulario();
-                ProfessorController controller = new ProfessorController();
-                Boolean response = controller.criarProfessor(map);
+                DisciplinaController controller = new DisciplinaController();
+                Boolean response = controller.criarDisciplina(map);
                 
                 
                 if(response) {
@@ -36,27 +36,27 @@ public class MainDisciplina {
         });
         
         
-        JButton botaoLerFormulario = new JButton("Buscar Professor");
+        JButton botaoLerFormulario = new JButton("Buscar Disciplina");
         
         botaoLerFormulario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	BuscarProfessor busca = new BuscarProfessor();
+            	BuscarDisciplina busca = new BuscarDisciplina();
             	String matriculaBuscada = busca.MostrarBuscador();
-            	ProfessorController controller = new ProfessorController();
-            	Map<String, String> mapProfessor = controller.buscarProfessor(matriculaBuscada);
-            	if (mapProfessor != null) { 
-            		List<Map<String, String>> listProfessor = new ArrayList<>();            		
-            		listProfessor.add(mapProfessor);
+            	DisciplinaController controller = new DisciplinaController();
+            	Map<String, String> mapDisciplina = controller.buscarDisciplina(matriculaBuscada);
+            	if (mapDisciplina != null) { 
+            		List<Map<String, String>> listDisciplina = new ArrayList<>();            		
+            		listDisciplina.add(mapDisciplina);
             		
-            		ProfessorTabelaView tabela = new ProfessorTabelaView();
-            		tabela.mostrarTabela(listProfessor);
+            		DisciplinaTabelaView tabela = new DisciplinaTabelaView();
+            		tabela.mostrarTabela(listDisciplina);
             		
             	
             		
             	    
             	} else {
-            	    System.out.println("Professor não encontrado");
+            	    System.out.println("Disciplina não encontrado");
             	}
             }
         });
@@ -69,17 +69,17 @@ public class MainDisciplina {
             @Override
             public void actionPerformed(ActionEvent e) {            	
         
-            	ProfessorController controller = new ProfessorController();
-            	List<Map<String, String>> listProfessor = controller.listarProfessor();
-            	if (listProfessor != null ) {         		
+            	DisciplinaController controller = new DisciplinaController();
+            	List<Map<String, String>> listDisciplina = controller.listarDisciplina();
+            	if (listDisciplina != null ) {         		
             		
-            		ProfessorTabelaView tabela = new ProfessorTabelaView();
-            		tabela.mostrarTabela(listProfessor); 		
+            		DisciplinaTabelaView tabela = new DisciplinaTabelaView();
+            		tabela.mostrarTabela(listDisciplina); 		
             	
             		
             	    
             	} else {
-            	    System.out.println("Professor não encontrado");
+            	    System.out.println("Disciplina não encontrado");
             	}
             }
         });
@@ -91,15 +91,15 @@ public class MainDisciplina {
 		            @Override
 		            public void actionPerformed(ActionEvent e) {        	
 		        
-		            	BuscarProfessor busca = new BuscarProfessor();
+		            	BuscarDisciplina busca = new BuscarDisciplina();
 		            	String matriculaBuscada = busca.MostrarBuscador();
-		            	ProfessorController controller = new ProfessorController();
-		            	Map<String, String> mapProfessor = controller.buscarProfessor(matriculaBuscada);
+		            	DisciplinaController controller = new DisciplinaController();
+		            	Map<String, String> mapDisciplina = controller.buscarDisciplina(matriculaBuscada);
 		            	
-		            	if (mapProfessor != null) { 
-		            		mapProfessor = UpdateProfessorView.showUpdateForm(mapProfessor);
-		            		ProfessorController controller2 = new ProfessorController();
-		            		Boolean response = controller2.atualizarProfessor(mapProfessor);
+		            	if (mapDisciplina != null) { 
+		            		mapDisciplina = UpdateDisciplinaView.showUpdateForm(mapDisciplina);
+		            		DisciplinaController controller2 = new DisciplinaController();
+		            		Boolean response = controller2.atualizarDisciplina(mapDisciplina);
 		            		
 		            		
 		            		if(response) {
@@ -112,7 +112,7 @@ public class MainDisciplina {
 		            		
 		            	    
 		            	} else {
-		            	    System.out.println("Professor não encontrado");
+		            	    System.out.println("Disciplina não encontrado");
 		            	}
 		          
 		            }
@@ -124,10 +124,10 @@ public class MainDisciplina {
 		        deletarCadastro.addActionListener(new ActionListener() {
 		            @Override
 		            public void actionPerformed(ActionEvent e) {            	
-		            	ProfessorController controller = new ProfessorController();
-		            	BuscarProfessor busca = new BuscarProfessor();		            		            		
+		            	DisciplinaController controller = new DisciplinaController();
+		            	BuscarDisciplina busca = new BuscarDisciplina();		            		            		
 		            	String matriculaBuscada = busca.MostrarBuscador();
-		            	Boolean response = controller.deletarProfessor(matriculaBuscada);
+		            	Boolean response = controller.deletarDisciplina(matriculaBuscada);
 		            	
 		            	if(response) {
 	                    	JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!");
