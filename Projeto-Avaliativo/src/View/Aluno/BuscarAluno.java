@@ -1,17 +1,16 @@
-package View;
-import java.util.Map;
-
+package View.Aluno;
 import javax.swing.*;
 
 
 public class BuscarAluno {
+	
 	public String MostrarBuscador() {
 		JTextField id = new JTextField(15);
 		
 		JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         
-			panel.add(new JLabel("Insira o ID a ser buscado"));
+			panel.add(new JLabel("Insira a matricula"));
 	        panel.add(id);
 	        panel.add(Box.createVerticalStrut(10));
 	        

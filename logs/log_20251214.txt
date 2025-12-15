@@ -11,3 +11,13 @@
 [2025-12-14 20:13:56] Erro ao criar aluno: ERRO: coluna "id_pessoa" da relação "aluno" não existe
   Posição: 31
 [2025-12-14 20:17:22] Erro ao deletar aluno: Cannot parse null string
+[2025-12-14 20:58:18] Erro ao criar Professor: Cannot invoke "java.lang.CharSequence.length()" because "this.text" is null
+[2025-12-14 21:13:25] Erro ao criar Professor: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-14 21:15:27] Erro ao criar Professor: Nenhum valor especificado para parâmetro 3.
+[2025-12-14 21:50:30] Erro ao criar Professor: ERRO: coluna "matricula" é do tipo integer mas expressão é do tipo character varying
+  Dica: Você precisará reescrever ou converter a expressão.
+  Posição: 47
+[2025-12-14 22:05:08] Erro ao criar aluno: For input string: "4567123890"
+[2025-12-14 22:07:57] Erro ao buscar aluno: [Ljava.lang.StackTraceElement;@5411586d
+[2025-12-14 22:09:22] Erro ao buscar aluno: [Ljava.lang.StackTraceElement;@6127ef5c
+[2025-12-14 22:10:02] Erro ao atualizar aluno: Cannot invoke "java.util.Map.get(Object)" because "dados" is null

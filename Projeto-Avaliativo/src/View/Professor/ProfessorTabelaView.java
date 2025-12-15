@@ -1,18 +1,18 @@
-package View;
+package View.Professor;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 import java.util.Map;
 
-public class AlunoTabelaView {
+public class ProfessorTabelaView {
 
-    public void mostrarTabela(List<Map<String, String>> alunos) {
+    public void mostrarTabela(List<Map<String, String>> professor) {
 
         // Colunas da tabela
         String[] colunas = {
             "Id", "Nome", "Endereço", "Telefone", "Email",
-            "Matrícula", "Nome do Pai", "Nome da Mãe"
+            "Matrícula"
         };
 
         // Modelo da tabela (não editável)
@@ -24,16 +24,15 @@ public class AlunoTabelaView {
         };
 
         // Preenchendo a tabela a partir do Map
-        for (Map<String, String> dados : alunos) {
+        for (Map<String, String> dados : professor) {
             model.addRow(new Object[]{
                 dados.get("id"),
                 dados.get("nome"),
                 dados.get("endereco"),
                 dados.get("telefone"),
                 dados.get("email"),
-                dados.get("matricula"),
-                dados.get("nomePai"),
-                dados.get("nomeMae")
+                dados.get("matricula")
+                
             });
         }
 
@@ -46,7 +45,7 @@ public class AlunoTabelaView {
         JOptionPane.showMessageDialog(
             null,
             scrollPane,
-            "Lista de Alunos",
+            "Lista de professor",
             JOptionPane.PLAIN_MESSAGE
         );
     }

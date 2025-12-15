@@ -1,7 +1,7 @@
 package Models;
 
 public class Aluno extends PessoaAbstract {
-    private String matricula;
+    private Integer matricula;
     private String nomePai;
     private String nomeMae;
 
@@ -12,7 +12,7 @@ public class Aluno extends PessoaAbstract {
 	    		String endereco, 
 	    		String telefone, 
 	    		String email, 
-	    		String matricula, 
+	    		Integer matricula, 
 	    		String nomePai, 
 	    		String nomeMae){
         super();
@@ -21,10 +21,10 @@ public class Aluno extends PessoaAbstract {
         this.nomeMae = nomeMae;
     }
 
-    public String getMatricula() {
+    public Integer getMatricula() {
         return matricula;
     }
-    public void setMatricula(String matricula) {
+    public void setMatricula(Integer matricula) {
         this.matricula = matricula;
     }
 

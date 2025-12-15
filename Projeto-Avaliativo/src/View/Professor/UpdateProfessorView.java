@@ -1,28 +1,28 @@
-package View;
+package View.Professor;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UpdateAlunoView {
+public class UpdateProfessorView {
 
-    public static Map<String, String> showUpdateForm(Map<String, String> aluno) {
+    public static Map<String, String> showUpdateForm(Map<String, String> professor) {
 
         // Painel principal
         JPanel panel = new JPanel(new GridLayout(0, 2, 10, 10));
 
         // Campos
-        JTextField txtId = new JTextField(aluno.get("id"));
+        JTextField txtId = new JTextField(professor.get("id"));
         txtId.setEditable(false);
 
-        JTextField txtNome = new JTextField(aluno.get("nome"));
-        JTextField txtEndereco = new JTextField(aluno.get("endereco"));
-        JTextField txtTelefone = new JTextField(aluno.get("telefone"));
-        JTextField txtEmail = new JTextField(aluno.get("email"));
-        JTextField txtMatricula = new JTextField(aluno.get("matricula"));
-        JTextField txtNomePai = new JTextField(aluno.get("nomePai"));
-        JTextField txtNomeMae = new JTextField(aluno.get("nomeMae"));
+        JTextField txtNome = new JTextField(professor.get("nome"));
+        JTextField txtEndereco = new JTextField(professor.get("endereco"));
+        JTextField txtTelefone = new JTextField(professor.get("telefone"));
+        JTextField txtEmail = new JTextField(professor.get("email"));
+        JTextField txtMatricula = new JTextField(professor.get("matricula"));
+        JTextField txtNomePai = new JTextField(professor.get("nomePai"));
+        JTextField txtNomeMae = new JTextField(professor.get("nomeMae"));
 
         // Adicionando rótulos e campos
         panel.add(new JLabel("ID:"));
@@ -43,17 +43,11 @@ public class UpdateAlunoView {
         panel.add(new JLabel("Matrícula:"));
         panel.add(txtMatricula);
 
-        panel.add(new JLabel("Nome do Pai:"));
-        panel.add(txtNomePai);
-
-        panel.add(new JLabel("Nome da Mãe:"));
-        panel.add(txtNomeMae);
-
         // Exibe o formulário
         int opcao = JOptionPane.showConfirmDialog(
             null,
             panel,
-            "Editar Aluno",
+            "Editar Professor",
             JOptionPane.OK_CANCEL_OPTION,
             JOptionPane.PLAIN_MESSAGE
         );
@@ -62,14 +56,12 @@ public class UpdateAlunoView {
         if (opcao == JOptionPane.OK_OPTION) {
             Map<String, String> atualizado = new HashMap<>();
 
-            atualizado.put("id", aluno.get("id")); // mantém o id
+            atualizado.put("id", professor.get("id")); // mantém o id
             atualizado.put("nome", txtNome.getText());
             atualizado.put("endereco", txtEndereco.getText());
             atualizado.put("telefone", txtTelefone.getText());
             atualizado.put("email", txtEmail.getText());
-            atualizado.put("matricula", txtMatricula.getText());
-            atualizado.put("nomePai", txtNomePai.getText());
-            atualizado.put("nomeMae", txtNomeMae.getText());
+            atualizado.put("matricula", txtMatricula.getText());            
 
             return atualizado;
         }

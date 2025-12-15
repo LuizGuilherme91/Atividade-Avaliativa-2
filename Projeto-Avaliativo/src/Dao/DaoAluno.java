@@ -41,7 +41,7 @@ public class DaoAluno implements DAO<Aluno, Integer> {
 
         // Inserir Aluno
         try (PreparedStatement ps = connection.prepareStatement(sqlAluno)) {
-            ps.setString(1, aluno.getMatricula());
+            ps.setInt(1, aluno.getMatricula());
             ps.setInt(2, aluno.getId());
             ps.setString(3, aluno.getNomePai());
             ps.setString(4, aluno.getNomeMae());
@@ -85,7 +85,7 @@ public class DaoAluno implements DAO<Aluno, Integer> {
                 ps.setString(2, aluno.getEndereco());
                 ps.setString(3, aluno.getTelefone());
                 ps.setString(4, aluno.getEmail());
-                ps.setString(5, aluno.getMatricula());
+                ps.setInt(5, aluno.getMatricula());
 
                 ps.executeUpdate();
             }
@@ -94,7 +94,7 @@ public class DaoAluno implements DAO<Aluno, Integer> {
             try (PreparedStatement ps = connection.prepareStatement(sqlAluno)) {
                 ps.setString(1, aluno.getNomePai());
                 ps.setString(2, aluno.getNomeMae());
-                ps.setString(3, aluno.getMatricula());
+                ps.setInt(3, aluno.getMatricula());
 
                 ps.executeUpdate();
             }
@@ -122,7 +122,7 @@ public class DaoAluno implements DAO<Aluno, Integer> {
 
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, String.format("%d",matricula));
+            ps.setInt(1, matricula);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -167,7 +167,7 @@ public class DaoAluno implements DAO<Aluno, Integer> {
         connection.setAutoCommit(false);
 
         try (PreparedStatement ps = connection.prepareStatement(sqlAluno)) {
-            ps.setString(1, aluno.getMatricula());
+            ps.setInt(1, aluno.getMatricula());
             ps.executeUpdate();
         }
 
@@ -191,7 +191,7 @@ public class DaoAluno implements DAO<Aluno, Integer> {
         aluno.setEndereco(rs.getString("endereco"));
         aluno.setTelefone(rs.getString("telefone"));
         aluno.setEmail(rs.getString("email"));
-        aluno.setMatricula(rs.getString("matricula"));
+        aluno.setMatricula(rs.getInt("matricula"));
         aluno.setNomePai(rs.getString("nome_pai"));
         aluno.setNomeMae(rs.getString("nome_mae"));
         return aluno;

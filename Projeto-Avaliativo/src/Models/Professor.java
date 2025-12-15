@@ -1,20 +1,20 @@
 package Models;
 
 public class Professor extends Pessoa {
-    private String matricula;
+    private Integer matricula;
 
     public Professor() {}
 
-    public Professor(Integer id, String nome, String endereco, String telefone, String email, String matricula) {
+    public Professor(Integer id, String nome, String endereco, String telefone, String email, Integer matricula) {
         super();
         this.matricula = matricula;
     }
 
-    public String getMatricula() {
+    public Integer getMatricula() {
         return matricula;
     }
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
+    public void setMatricula(int i) {
+        this.matricula = i;
     }
 
 }

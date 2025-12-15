@@ -1,4 +1,4 @@
-package View;
+package View.Aluno;
 import javax.swing.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -34,6 +34,7 @@ public class AlunoController {
         	//inserir logica de log
             System.err.println("Erro ao criar aluno: " + e.getMessage());
             Util.log("Erro ao criar aluno: " + e.getMessage());
+            e.printStackTrace(System.err);
             return false;
         } finally {
             PostgresConnection.closeConnection();
@@ -170,7 +171,7 @@ public class AlunoController {
     	mapAluno.put("endereco", aluno.getEndereco());
     	mapAluno.put("telefone", aluno.getTelefone());
     	mapAluno.put("email", aluno.getEmail());
-    	mapAluno.put("matricula", aluno.getMatricula());
+    	mapAluno.put("matricula",String.format("%d", aluno.getMatricula()));
     	mapAluno.put("nomePai", aluno.getNomePai());
     	mapAluno.put("nomeMae", aluno.getNomeMae());
     	return mapAluno;
@@ -187,7 +188,7 @@ public class AlunoController {
         aluno.setEndereco(dados.get("endereco"));
         aluno.setTelefone(dados.get("telefone"));
         aluno.setEmail(dados.get("email"));
-        aluno.setMatricula(dados.get("matricula"));
+        aluno.setMatricula(Integer.parseInt(dados.get("matricula")) );
         aluno.setNomePai(dados.get("nomePai"));
         aluno.setNomeMae(dados.get("nomeMae"));
 
