@@ -1,10 +1,11 @@
 package Dao;
 
-import Models.Periodo;
+import Models.Periodo; 
 import java.sql.*;
-
+import java.util.*;
 
 public class DaoPeriodo implements DAO<Periodo, Integer> {
+
     private final Connection connection;
 
     public DaoPeriodo(Connection connection) {
@@ -13,9 +14,7 @@ public class DaoPeriodo implements DAO<Periodo, Integer> {
 
     @Override
     public Boolean save(Periodo periodo) throws SQLException {
-        String sql = "INSERT INTO periodo (nome_periodo) VALUES (?)";
-
-        connection.setAutoCommit(false);
+        String sql = "INSERT INTO Periodo (nome_periodo) VALUES (?)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, periodo.getNome_periodo());
@@ -30,16 +29,12 @@ public class DaoPeriodo implements DAO<Periodo, Integer> {
             }
         }
 
-        connection.commit();
-        connection.setAutoCommit(true);
         return true;
     }
 
     @Override
     public Boolean update(Periodo periodo) throws SQLException {
-        String sql = "UPDATE periodo SET nome_periodo = ? WHERE id = ?";
-
-        connection.setAutoCommit(false);
+        String sql = "UPDATE Periodo SET nome_periodo = ? WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, periodo.getNome_periodo());
@@ -47,35 +42,31 @@ public class DaoPeriodo implements DAO<Periodo, Integer> {
             ps.executeUpdate();
         }
 
-        connection.commit();
-        connection.setAutoCommit(true);
         return true;
     }
 
     @Override
-    public java.util.Optional<Periodo> findById(Integer id) throws SQLException {
-        String sql = "SELECT * FROM periodo WHERE id = ?";
+    public Optional<Periodo> findById(Integer id) throws SQLException {
+        String sql = "SELECT id, nome_periodo FROM Periodo WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
+
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Periodo periodo = new Periodo();
-                    periodo.setId(rs.getInt("id"));
-                    periodo.setNome_periodo(rs.getString("nome_periodo"));
-                    return java.util.Optional.of(periodo);
+                    return Optional.of(mapPeriodo(rs));
                 }
             }
         }
 
-        return java.util.Optional.empty();
+        return Optional.empty();
     }
 
     @Override
-    public java.util.List<Periodo> findAll() throws SQLException {
-        String sql = "SELECT * FROM periodo";
-        java.util.List<Periodo> periodos = new java.util.ArrayList<>();
+    public List<Periodo> findAll() throws SQLException {
+        String sql = "SELECT id, nome_periodo FROM Periodo ORDER BY nome_periodo";
 
+        List<Periodo> periodos = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -88,25 +79,23 @@ public class DaoPeriodo implements DAO<Periodo, Integer> {
 
     @Override
     public Boolean delete(Periodo periodo) throws SQLException {
-        String sql = "DELETE FROM periodo WHERE id = ?";
-
-        connection.setAutoCommit(false);
+        String sql = "DELETE FROM Periodo WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, periodo.getId());
             ps.executeUpdate();
         }
 
-        connection.commit();
-        connection.setAutoCommit(true);
         return true;
     }
 
+    // =========================
+    // Helper
+    // =========================
     private Periodo mapPeriodo(ResultSet rs) throws SQLException {
         Periodo periodo = new Periodo();
         periodo.setId(rs.getInt("id"));
         periodo.setNome_periodo(rs.getString("nome_periodo"));
         return periodo;
     }
-
 }

@@ -9,7 +9,7 @@ public class Validator {
     private static final Pattern TELEFONE_REGEX = Pattern.compile("^\\+?\\d{10,15}$");
     private static final Pattern EMAIL_REGEX = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.\\w+$");
     private static final Pattern MATRICULA_REGEX = Pattern.compile("^\\d{10}$"); // 10 dígitos exatos
-    
+    private static final Pattern VALIDAR_NOTA = Pattern.compile("^(10([.,]0)?|[0-9]([.,][0-9])?)$"); // 0 -  10 , ou , até uma casa descimal
 
     
     public static boolean validarNome(String nome) {
@@ -35,6 +35,11 @@ public class Validator {
     public static boolean validarMatricula(String matricula) {
         return MATRICULA_REGEX.matcher(matricula).matches();
     }
+    
+    public static boolean validarNota(String nota) {
+        return VALIDAR_NOTA.matcher(nota).matches();
+    }
+    
 
     
 

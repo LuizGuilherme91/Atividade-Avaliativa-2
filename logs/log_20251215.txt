@@ -1,0 +1,51 @@
+[2025-12-15 11:22:02] Erro ao criar Disciplina: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 11:22:12] Erro ao criar Disciplina: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 11:22:58] Erro ao criar Disciplina: Cannot parse null string
+[2025-12-15 11:25:35] Erro ao criar Disciplina: Cannot parse null string
+[2025-12-15 11:28:04] Erro ao criar Disciplina: ERRO: inserção ou atualização em tabela "disciplina" viola restrição de chave estrangeira "disciplina_id_professor_fkey"
+  Detalhe: Chave (id_professor)=(1234567890) não está presente na tabela "professor".
+[2025-12-15 11:32:51] Erro ao criar Disciplina: ERRO: inserção ou atualização em tabela "disciplina" viola restrição de chave estrangeira "disciplina_id_professor_fkey"
+  Detalhe: Chave (id_professor)=(987654321) não está presente na tabela "professor".
+[2025-12-15 11:44:39] Erro ao atualizar Disciplina: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 11:55:38] Erro ao listar aluno: ERRO: coluna a.id não existe
+  Dica: Talvez você queira fazer referência à coluna "p.id".
+  Posição: 153
+[2025-12-15 11:59:56] Erro ao deletar aluno: Cannot parse null string
+[2025-12-15 12:00:57] Erro ao criar Disciplina: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 12:07:28] Erro ao deletar aluno: Cannot parse null string
+[2025-12-15 12:12:10] Erro ao atualizar Professor: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 12:14:33] Erro ao criar Disciplina: ERRO: coluna "id_professor" da relação "disciplina" não existe
+  Posição: 42
+[2025-12-15 12:19:51] Erro ao deletar disciplina: Cannot parse null string
+[2025-12-15 12:20:11] Erro ao atualizar Disciplina: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 12:20:45] Erro ao atualizar Disciplina: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 13:39:07] Erro ao criar Periodo: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 14:06:47] Erro ao atualizar Turma: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 15:16:45] Erro ao atualizar aluno: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 15:16:59] Erro ao deletar aluno: Cannot parse null string
+[2025-12-15 15:58:04] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 15:58:13] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:12:02] Erro ao criar aluno: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:27:09] Erro ao criar aluno: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:27:24] Erro ao deletar aluno: Cannot parse null string
+[2025-12-15 16:28:09] Erro ao atualizar aluno: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:28:14] Erro ao criar Professor: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:28:33] Erro ao atualizar Professor: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:28:42] Erro ao criar Turma: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:29:14] Erro ao atualizar Turma: This connection has been closed.
+[2025-12-15 16:29:29] Erro ao atualizar Turma: This connection has been closed.
+[2025-12-15 16:31:06] Erro ao atualizar Disciplina: Cannot parse null string
+[2025-12-15 16:32:53] Erro ao atualizar aluno: This connection has been closed.
+[2025-12-15 16:34:27] Erro ao atualizar aluno: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:42:10] Erro ao atualizar Professor: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:51:01] Erro ao criar Professor: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:52:20] Erro ao atualizar Professor: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:57:03] Erro ao atualizar Disciplina: Cannot parse null string
+[2025-12-15 16:58:49] Erro ao deletar Diario: Cannot parse null string
+[2025-12-15 16:59:35] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:59:49] Erro ao criar Periodo: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 17:38:01] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 17:38:19] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 17:58:12] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 18:10:57] Erro ao deletar Diario: Cannot parse null string
+[2025-12-15 18:13:05] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null

@@ -1,155 +1,70 @@
 package View;
+
 import javax.swing.*;
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.*;
-import Controller.*;
-import Models.Aluno;
+import java.awt.*;
+
+import View.Aluno.OperacoesAlunoView;
+import View.Professor.OperacoesProfessorView;
+import View.Turma.OperacoesTurmaView;
+import View.Disciplina.OperacoesDisciplinaView;
+import View.Diario.OperacoesDiarioView;
+import View.Nota.OperacoesNotaView;
+import View.Periodo.OperacoesPeriodoView;
+
 public class MainView {
 
     public static void main(String[] args) {
-        // Criar a janela principal
-        JFrame frame = new JFrame("Tela Principal");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 200);
+
+        SwingUtilities.invokeLater(() -> {
+
+            JFrame frame = new JFrame("Sistema Acadêmico");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(500, 500);
+            frame.setLocationRelativeTo(null);
+
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridLayout(0, 1, 12, 12));
+            panel.setBorder(BorderFactory.createEmptyBorder(20, 60, 20, 60));
+
+            JLabel titulo = new JLabel("Menu Principal", SwingConstants.CENTER);
+            titulo.setFont(new Font("Arial", Font.BOLD, 20));
+
+            JButton btnAluno = new JButton("Operações Aluno");
+            JButton btnProfessor = new JButton("Operações Professor");
+            JButton btnTurma = new JButton("Operações Turma");
+            JButton btnDisciplina = new JButton("Operações Disciplina");
+            JButton btnDiario = new JButton("Operações Diário");
+            JButton btnNota = new JButton("Operações Nota");
+            JButton btnPeriodo = new JButton("Operações Período");
+
+            btnAluno.addActionListener(e -> abrirJanela("Aluno", OperacoesAlunoView.criarPainel()));
+            btnProfessor.addActionListener(e -> abrirJanela("Professor", OperacoesProfessorView.criarPainel()));
+            btnTurma.addActionListener(e -> abrirJanela("Turma", OperacoesTurmaView.criarPainel()));
+            btnDisciplina.addActionListener(e -> abrirJanela("Disciplina", OperacoesDisciplinaView.criarPainel()));
+            btnDiario.addActionListener(e -> abrirJanela("Diário", OperacoesDiarioView.criarPainel()));
+            btnNota.addActionListener(e -> abrirJanela("Nota", OperacoesNotaView.criarPainel()));
+            btnPeriodo.addActionListener(e -> abrirJanela("Período", OperacoesPeriodoView.criarPainel()));
+
+            panel.add(titulo);
+            panel.add(btnAluno);
+            panel.add(btnProfessor);
+            panel.add(btnTurma);
+            panel.add(btnDisciplina);
+            panel.add(btnDiario);
+            panel.add(btnNota);
+            panel.add(btnPeriodo);
+
+            frame.add(panel);
+            frame.setVisible(true);
+        });
+    }
+
+    private static void abrirJanela(String titulo, JPanel painel) {
+        JFrame frame = new JFrame("Operações de " + titulo);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(450, 450);
         frame.setLocationRelativeTo(null);
-
-        // Botão para abrir formulário
-        JButton botaoAbrirFormulario = new JButton("Cadastrar Aluno");        
-        // Ação do botão
-        botaoAbrirFormulario.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AlunoFormulario formulario = new AlunoFormulario();
-                Map<String, String> map = formulario.mostrarFormulario();
-                AlunoController controller = new AlunoController();
-                Boolean response = controller.criarAluno(map);
-                
-                
-                if(response) {
-                	JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!");
-                	
-                }else {
-                	JOptionPane.showMessageDialog(null, "Operação falhou verifique");
-                }
-            }
-        });
-        
-        
-        JButton botaoLerFormulario = new JButton("Buscar aluno");
-        
-        botaoLerFormulario.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	BuscarAluno busca = new BuscarAluno();
-            	String matriculaBuscada = busca.MostrarBuscador();
-            	AlunoController controller = new AlunoController();
-            	Map<String, String> mapAluno = controller.buscarAluno(matriculaBuscada);
-            	if (mapAluno != null) { 
-            		List<Map<String, String>> listAluno = new ArrayList<>();            		
-            		listAluno.add(mapAluno);
-            		
-            		AlunoTabelaView tabela = new AlunoTabelaView();
-            		tabela.mostrarTabela(listAluno);
-            		
-            	
-            		
-            	    
-            	} else {
-            	    System.out.println("Aluno não encontrado");
-            	}
-            }
-        });
-        
-        
-        
-        JButton botaoLerTudo = new JButton("Buscar Todos");
-        
-        botaoLerTudo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {            	
-        
-            	AlunoController controller = new AlunoController();
-            	List<Map<String, String>> listAluno = controller.listarAlunos();
-            	if (listAluno != null ) {         		
-            		
-            		AlunoTabelaView tabela = new AlunoTabelaView();
-            		tabela.mostrarTabela(listAluno); 		
-            	
-            		
-            	    
-            	} else {
-            	    System.out.println("Aluno não encontrado");
-            	}
-            }
-        });
-        
-        
-		JButton atualizar = new JButton("Atualizar");
-		        
-		        atualizar.addActionListener(new ActionListener() {
-		            @Override
-		            public void actionPerformed(ActionEvent e) {        	
-		        
-		            	BuscarAluno busca = new BuscarAluno();
-		            	String matriculaBuscada = busca.MostrarBuscador();
-		            	AlunoController controller = new AlunoController();
-		            	Map<String, String> mapAluno = controller.buscarAluno(matriculaBuscada);
-		            	
-		            	if (mapAluno != null) { 
-		            		mapAluno =UpdateAlunoView.showUpdateForm(mapAluno);
-		            		AlunoController controller2 = new AlunoController();
-		            		Boolean response = controller2.atualizarAluno(mapAluno);
-		            		
-		            		
-		            		if(response) {
-		                    	JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!");
-		                    	
-		                    }else {
-		                    	JOptionPane.showMessageDialog(null, "Operação falhou verifique");
-		                    }
-		            	
-		            		
-		            	    
-		            	} else {
-		            	    System.out.println("Aluno não encontrado");
-		            	}
-		          
-		            }
-		        });
-		        
-		        
-		        JButton deletarCadastro = new JButton("Deletar cadastro");
-		        
-		        deletarCadastro.addActionListener(new ActionListener() {
-		            @Override
-		            public void actionPerformed(ActionEvent e) {            	
-		            	AlunoController controller = new AlunoController();
-		            	BuscarAluno busca = new BuscarAluno();		            		            		
-		            	String matriculaBuscada = busca.MostrarBuscador();
-		            	Boolean response = controller.deletarAluno(matriculaBuscada);
-		            	
-		            	if(response) {
-	                    	JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!");
-	                    	
-	                    }else {
-	                    	JOptionPane.showMessageDialog(null, "Operação falhou verifique");
-	                    }
-		            }
-		        });
-		        
-		        
-        
-
-        // Adicionar botão ao painel
-        JPanel panel = new JPanel();
-        panel.add(botaoAbrirFormulario);
-        panel.add(botaoLerFormulario);
-        panel.add(deletarCadastro);
-        panel.add(botaoLerTudo);
-        panel.add(atualizar);
-        frame.add(panel);
+        frame.add(painel);
         frame.setVisible(true);
     }
 }

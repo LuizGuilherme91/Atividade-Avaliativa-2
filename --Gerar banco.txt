@@ -1,0 +1,149 @@
+--Gerar banco:
+
+
+-- Tabela base
+CREATE TABLE Pessoa (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    endereco VARCHAR(255),
+    telefone VARCHAR(20),
+    email VARCHAR(100) UNIQUE
+);
+
+-- Professor
+CREATE TABLE Professor (
+    matricula INT PRIMARY KEY,
+    id_pessoa INT NOT NULL,
+    FOREIGN KEY (id_pessoa) REFERENCES Pessoa(id)
+);
+
+-- Aluno
+CREATE TABLE Aluno (
+    matricula INT PRIMARY KEY,
+    id_pessoa INT NOT NULL,
+    nome_pai VARCHAR(255),
+    nome_mae VARCHAR(255),
+    FOREIGN KEY (id_pessoa) REFERENCES Pessoa(id)
+);
+
+-- Disciplina
+CREATE TABLE Disciplina (
+    id SERIAL PRIMARY KEY,
+    nome_disciplina VARCHAR(100) NOT NULL UNIQUE,
+    matricula_professor INT NOT NULL,
+    FOREIGN KEY (matricula_professor) REFERENCES Professor(matricula)
+);
+
+-- Período
+CREATE TABLE Periodo (
+    id SERIAL PRIMARY KEY,
+    nome_periodo VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Turma
+CREATE TABLE Turma (
+    id SERIAL PRIMARY KEY,
+    nome_turma VARCHAR(100) NOT NULL
+);
+
+-- Diário
+CREATE TABLE Diario (
+    id SERIAL PRIMARY KEY,
+    status BOOLEAN NOT NULL DEFAULT TRUE,
+    
+    matricula_aluno INT NOT NULL,
+    id_disciplina INT NOT NULL,
+    id_periodo INT NOT NULL,
+    id_turma INT NOT NULL,
+	
+    FOREIGN KEY (matricula_aluno) REFERENCES Aluno(matricula),
+	FOREIGN KEY (id_turma) REFERENCES Turma(id),
+    FOREIGN KEY (id_disciplina) REFERENCES Disciplina(id),
+    FOREIGN KEY (id_periodo) REFERENCES Periodo(id)
+);
+
+-- Nota
+CREATE TABLE Nota (
+    id SERIAL PRIMARY KEY,
+    nota DOUBLE PRECISION NOT NULL,
+    
+    id_diario INT NOT NULL,
+    matricula_aluno INT NOT NULL,
+    
+    FOREIGN KEY (id_diario) REFERENCES Diario(id),
+    FOREIGN KEY (matricula_aluno) REFERENCES Aluno(matricula)
+);
+
+
+
+-- Inserções na tabela Pessoa
+INSERT INTO Pessoa (nome, endereco, telefone, email) VALUES
+('Ana Souza', 'Rua A, 123', '11999990001', 'ana.souza@email.com'),
+('Bruno Lima', 'Rua B, 456', '11999990002', 'bruno.lima@email.com'),
+('Carlos Silva', 'Rua C, 789', '11999990003', 'carlos.silva@email.com'),
+('Daniela Rocha', 'Rua D, 101', '11999990004', 'daniela.rocha@email.com'),
+('Eduardo Mendes', 'Rua E, 202', '11999990005', 'eduardo.mendes@email.com');
+
+-- Inserções na tabela Professor (matricula com 10 dígitos)
+INSERT INTO Professor (matricula, id_pessoa) VALUES
+(1000000001, 1),
+(1000000002, 2),
+(1000000003, 3),
+(1000000004, 4),
+(1000000005, 5);
+
+-- Inserções na tabela Aluno (matricula com 10 dígitos)
+INSERT INTO Aluno (matricula, id_pessoa, nome_pai, nome_mae) VALUES
+(2000000001, 1, 'João Souza', 'Maria Souza'),
+(2000000002, 2, 'Roberto Lima', 'Clara Lima'),
+(2000000003, 3, 'Felipe Silva', 'Luciana Silva'),
+(2000000004, 4, 'Ricardo Rocha', 'Fernanda Rocha'),
+(2000000005, 5, 'Gustavo Mendes', 'Patrícia Mendes');
+
+-- Inserções na tabela Disciplina
+INSERT INTO Disciplina (nome_disciplina, matricula_professor) VALUES
+('Matemática', 1000000001),
+('Português', 1000000002),
+('História', 1000000003),
+('Geografia', 1000000004),
+('Física', 1000000005);
+
+-- Inserções na tabela Periodo
+INSERT INTO Periodo (nome_periodo) VALUES
+('2025.1'),
+('2025.2'),
+('2026.1'),
+('2026.2'),
+('2027.1');
+
+-- Inserções na tabela Turma
+INSERT INTO Turma (nome_turma) VALUES
+('Turma A'),
+('Turma B'),
+('Turma C'),
+('Turma D'),
+('Turma E');
+
+-- Inserções na tabela Diario
+INSERT INTO Diario (status, matricula_aluno, id_disciplina, id_periodo, id_turma) VALUES
+(TRUE, 2000000001, 1, 1, 1),
+(TRUE, 2000000002, 2, 2, 2),
+(TRUE, 2000000003, 3, 3, 3),
+(TRUE, 2000000004, 4, 4, 4),
+(TRUE, 2000000005, 5, 5, 5);
+
+-- Inserções na tabela Nota
+INSERT INTO Nota (nota, id_diario, matricula_aluno) VALUES
+(9.5, 1, 2000000001),
+(8.0, 2, 2000000002),
+(7.5, 3, 2000000003),
+(6.0, 4, 2000000004),
+(10.0, 5, 2000000005);
+
+
+
+
+
+
+
+

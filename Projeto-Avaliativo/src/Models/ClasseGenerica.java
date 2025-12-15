@@ -2,11 +2,11 @@ package Models;
 
 public class ClasseGenerica {
     private Integer id;
-    private String matricula;
+    private Integer matricula;
 
     public ClasseGenerica() {}
 
-    public ClasseGenerica(Integer id, String matricula) {
+    public ClasseGenerica(Integer id, Integer matricula) {
         this.id = id;
         this.matricula = matricula;
     }
@@ -18,10 +18,10 @@ public class ClasseGenerica {
         this.id = id;
     }
 
-    public String getMatricula() {
+    public Integer getMatricula() {
         return matricula;
     }
-    public void setMatricula(String matricula) {
+    public void setMatricula(Integer matricula) {
         this.matricula = matricula;
     }
 }
