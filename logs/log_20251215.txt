@@ -44,3 +44,8 @@
 [2025-12-15 16:58:49] Erro ao deletar Diario: Cannot parse null string
 [2025-12-15 16:59:35] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
 [2025-12-15 16:59:49] Erro ao criar Periodo: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 17:38:01] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 17:38:19] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 17:58:12] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 18:10:57] Erro ao deletar Diario: Cannot parse null string
+[2025-12-15 18:13:05] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null

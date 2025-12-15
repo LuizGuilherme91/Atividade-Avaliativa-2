@@ -117,6 +117,64 @@ public class DiarioController {
             PostgresConnection.closeConnection();
         }
     }
+    
+    public Boolean atualizarStatus() {
+    	try {
+    		
+    	
+	        NotaController notaController = new NotaController();
+	
+	        List<Map<String, String>> listaNotas = notaController.listarNota();
+	        List<Map<String, String>> listaDiarios = listarDiario();
+	
+	        for (Map<String, String> diarioMap : listaDiarios) {
+	
+	            int idDiario = Integer.parseInt(diarioMap.get("id"));
+	
+	            double soma = 0.0;
+	            int quantidade = 0;
+	
+	            for (Map<String, String> notaMap : listaNotas) {
+	
+	                int idDiarioNota = Integer.parseInt(notaMap.get("id_diario"));
+	
+	                if (idDiarioNota == idDiario) {
+	
+	                    // corrige separador decimal
+	                    String notaStr = notaMap.get("nota").replace(",", ".");
+	                    double nota = Double.parseDouble(notaStr);
+	
+	                    soma += nota;
+	                    quantidade++;
+	                }
+	            }
+	
+	            if (quantidade == 0) {
+	                System.out.println("Diário " + idDiario + " não possui notas.");
+	                continue;
+	            }
+	
+	            double media = soma / quantidade;
+	
+	            boolean aprovado = media >= 6.0;
+	
+	            
+	            diarioMap.put("status", aprovado ? "true" : "false");
+	
+	            
+	            atualizarDiario(diarioMap);
+	            
+	            	
+	
+	        }
+    	}catch(Exception e){
+    		Util.log("Erro ao deletar Diario: " + e.getMessage());
+    		return false;	
+    	}
+    	
+        return true;
+    }
+
 
     // =========================
     // HELPERS
@@ -151,5 +209,10 @@ public class DiarioController {
                 dados.get("status")
         );
         return diario;
+    }
+    
+    public static void main(String[] args) {
+    	DiarioController d = new DiarioController();
+    	d.atualizarStatus();
     }
 }

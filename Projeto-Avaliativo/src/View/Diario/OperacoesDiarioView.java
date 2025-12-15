@@ -18,7 +18,7 @@ public class OperacoesDiarioView {
         JButton btnBuscarTodos = new JButton("Buscar Todos");
         JButton btnAtualizar = new JButton("Atualizar Diário");
         JButton btnDeletar = new JButton("Deletar Diário");
-
+        JButton btnAtualizarStatus = new JButton("Atualizar Status");
         // Cadastrar
         btnCadastrar.addActionListener(e -> {
             DiarioFormulario formulario = new DiarioFormulario();
@@ -100,13 +100,26 @@ public class OperacoesDiarioView {
                 response ? "Operação realizada com sucesso!" : "Operação falhou, verifique"
             );
         });
+        
+        
+        btnAtualizarStatus.addActionListener(e -> {         
+           
+
+            DiarioController controller = new DiarioController();
+            Boolean response = controller.atualizarStatus();
+            
+            JOptionPane.showMessageDialog(
+                null,
+                response ? "Operação realizada com sucesso!" : "Operação falhou, verifique"
+            );
+        });
 
         panel.add(btnCadastrar);
         panel.add(btnBuscar);
         panel.add(btnBuscarTodos);
         panel.add(btnAtualizar);
         panel.add(btnDeletar);
-
+        panel.add(btnAtualizarStatus);
         return panel;
     }
 }

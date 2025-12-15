@@ -123,7 +123,7 @@ public class NotaController {
     // =========================
     private boolean validarDados(Map<String, String> dados) {
         // validação simples seguindo o padrão do DiarioController
-        if (!Validator.validarEndereco(dados.get("nota"))) {
+        if (!Validator.validarNota(dados.get("nota"))) {
             System.out.println("validarNota falhou");
             return false;
         }
