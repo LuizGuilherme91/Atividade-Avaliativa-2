@@ -45,7 +45,7 @@ public class UpdateDisciplinaView {
 
             atualizado.put("id", disciplina.get("id")); // mantém o id
             atualizado.put("nome", txtNome.getText());
-            atualizado.put("Professor", txtProfessor.getText());
+            atualizado.put("professor", txtProfessor.getText());
                        
 
             return atualizado;

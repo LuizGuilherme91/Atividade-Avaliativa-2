@@ -75,7 +75,8 @@ public class OperacoesDiarioView {
 
             if (diario != null) {
                 diario = UpdateDiarioView.showUpdateForm(diario);
-                Boolean response = controller.atualizarDiario(diario);
+                DiarioController controller2 = new DiarioController();
+                Boolean response = controller2.atualizarDiario(diario);
 
                 JOptionPane.showMessageDialog(
                     null,

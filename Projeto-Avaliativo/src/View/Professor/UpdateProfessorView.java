@@ -21,8 +21,6 @@ public class UpdateProfessorView {
         JTextField txtTelefone = new JTextField(professor.get("telefone"));
         JTextField txtEmail = new JTextField(professor.get("email"));
         JTextField txtMatricula = new JTextField(professor.get("matricula"));
-        JTextField txtNomePai = new JTextField(professor.get("nomePai"));
-        JTextField txtNomeMae = new JTextField(professor.get("nomeMae"));
 
         // Adicionando rótulos e campos
         panel.add(new JLabel("ID:"));

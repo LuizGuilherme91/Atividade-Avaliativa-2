@@ -75,7 +75,8 @@ public class OperacoesTurmaView {
 
             if (turma != null) {
                 turma = UpdateTurmaView.showUpdateForm(turma);
-                Boolean response = controller.atualizarTurma(turma);
+                TurmaController controller2 = new TurmaController();
+                Boolean response = controller2.atualizarTurma(turma);
 
                 JOptionPane.showMessageDialog(
                     null,

@@ -75,7 +75,9 @@ public class OperacoesProfessorView {
 
             if (professor != null) {
                 professor = UpdateProfessorView.showUpdateForm(professor);
-                Boolean response = controller.atualizarProfessor(professor);
+                ProfessorController controller2 = new ProfessorController();
+                System.out.println(professor);
+                Boolean response = controller2.atualizarProfessor(professor);
 
                 JOptionPane.showMessageDialog(
                     null,

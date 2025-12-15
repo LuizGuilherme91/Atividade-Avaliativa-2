@@ -76,7 +76,8 @@ public class OperacoesDisciplinaView {
 
             if (disciplina != null) {
                 disciplina = UpdateDisciplinaView.showUpdateForm(disciplina);
-                Boolean response = controller.atualizarDisciplina(disciplina);
+                DisciplinaController controller2 = new DisciplinaController();
+                Boolean response = controller2.atualizarDisciplina(disciplina);
 
                 JOptionPane.showMessageDialog(
                     null,

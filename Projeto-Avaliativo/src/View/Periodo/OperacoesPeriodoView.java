@@ -75,7 +75,8 @@ public class OperacoesPeriodoView {
 
             if (periodo != null) {
                 periodo = UpdatePeriodoView.showUpdateForm(periodo);
-                Boolean response = controller.atualizarPeriodo(periodo);
+                PeriodoController controller2 = new PeriodoController();
+                Boolean response = controller2.atualizarPeriodo(periodo);
 
                 JOptionPane.showMessageDialog(
                     null,

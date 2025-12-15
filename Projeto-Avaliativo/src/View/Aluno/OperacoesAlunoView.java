@@ -74,8 +74,9 @@ public class OperacoesAlunoView {
             Map<String, String> aluno = controller.buscarAluno(matricula);
 
             if (aluno != null) {
+            	AlunoController controller2 = new AlunoController();
                 aluno = UpdateAlunoView.showUpdateForm(aluno);
-                Boolean response = controller.atualizarAluno(aluno);
+                Boolean response = controller2.atualizarAluno(aluno);
 
                 JOptionPane.showMessageDialog(
                     null,

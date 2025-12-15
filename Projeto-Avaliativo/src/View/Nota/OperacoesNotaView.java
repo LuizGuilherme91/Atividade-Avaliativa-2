@@ -75,7 +75,8 @@ public class OperacoesNotaView {
 
             if (nota != null) {
                 nota = UpdateNotaView.showUpdateForm(nota);
-                Boolean response = controller.atualizarNota(nota);
+                NotaController controller2 = new NotaController();
+                Boolean response = controller2.atualizarNota(nota);
 
                 JOptionPane.showMessageDialog(
                     null,

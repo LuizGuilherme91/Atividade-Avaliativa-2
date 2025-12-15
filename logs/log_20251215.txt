@@ -26,3 +26,21 @@
 [2025-12-15 15:58:04] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
 [2025-12-15 15:58:13] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
 [2025-12-15 16:12:02] Erro ao criar aluno: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:27:09] Erro ao criar aluno: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:27:24] Erro ao deletar aluno: Cannot parse null string
+[2025-12-15 16:28:09] Erro ao atualizar aluno: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:28:14] Erro ao criar Professor: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:28:33] Erro ao atualizar Professor: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:28:42] Erro ao criar Turma: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:29:14] Erro ao atualizar Turma: This connection has been closed.
+[2025-12-15 16:29:29] Erro ao atualizar Turma: This connection has been closed.
+[2025-12-15 16:31:06] Erro ao atualizar Disciplina: Cannot parse null string
+[2025-12-15 16:32:53] Erro ao atualizar aluno: This connection has been closed.
+[2025-12-15 16:34:27] Erro ao atualizar aluno: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:42:10] Erro ao atualizar Professor: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:51:01] Erro ao criar Professor: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:52:20] Erro ao atualizar Professor: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:57:03] Erro ao atualizar Disciplina: Cannot parse null string
+[2025-12-15 16:58:49] Erro ao deletar Diario: Cannot parse null string
+[2025-12-15 16:59:35] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 16:59:49] Erro ao criar Periodo: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
