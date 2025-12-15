@@ -4,8 +4,8 @@ import Models.Disciplina;
 import java.sql.*;
 import java.util.*;
 
+public class DaoDisciplina implements DAO<Disciplina, Integer> {
 
-public class DaoDisciplina implements DAO<Disciplina, Integer>{
     private final Connection connection;
 
     public DaoDisciplina(Connection connection) {
@@ -14,10 +14,11 @@ public class DaoDisciplina implements DAO<Disciplina, Integer>{
 
     @Override
     public Boolean save(Disciplina disciplina) throws SQLException {
-        String sql = "INSERT INTO disciplina (nome_disciplina) VALUES (?)";
+        String sql = "INSERT INTO Disciplina (nome_disciplina, id_professor) VALUES (?, ?)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, disciplina.getNome_disciplina());
+            ps.setInt(2, disciplina.getProf_responsavel());
             ps.executeUpdate();
 
             try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -29,40 +30,33 @@ public class DaoDisciplina implements DAO<Disciplina, Integer>{
             }
         }
 
-        connection.commit();
-        connection.setAutoCommit(true);
         return true;
     }
 
     @Override
     public Boolean update(Disciplina disciplina) throws SQLException {
-        String sql = "UPDATE disciplina SET nome_disciplina = ? WHERE id = ?";
-
-        connection.setAutoCommit(false);
+        String sql = "UPDATE Disciplina SET nome_disciplina = ?, id_professor = ? WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, disciplina.getNome_disciplina());
-            ps.setInt(2, disciplina.getId());
+            ps.setInt(2, disciplina.getProf_responsavel());
+            ps.setInt(3, disciplina.getId());
             ps.executeUpdate();
         }
 
-        connection.commit();
-        connection.setAutoCommit(true);
         return true;
     }
 
     @Override
     public Optional<Disciplina> findById(Integer id) throws SQLException {
-        String sql = "SELECT * FROM disciplina WHERE id = ?";
+        String sql = "SELECT id, nome_disciplina, id_professor FROM Disciplina WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
+
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Disciplina disciplina = new Disciplina();
-                    disciplina.setId(rs.getInt("id"));
-                    disciplina.setNome_disciplina(rs.getString("nome_disciplina"));
-                    return Optional.of(disciplina);
+                    return Optional.of(mapDisciplina(rs));
                 }
             }
         }
@@ -72,9 +66,9 @@ public class DaoDisciplina implements DAO<Disciplina, Integer>{
 
     @Override
     public List<Disciplina> findAll() throws SQLException {
-        String sql = "SELECT * FROM disciplina";
-        List<Disciplina> disciplinas = new ArrayList<>();
+        String sql = "SELECT id, nome_disciplina, id_professor FROM Disciplina ORDER BY nome_disciplina";
 
+        List<Disciplina> disciplinas = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -87,25 +81,24 @@ public class DaoDisciplina implements DAO<Disciplina, Integer>{
 
     @Override
     public Boolean delete(Disciplina disciplina) throws SQLException {
-        String sql = "DELETE FROM disciplina WHERE id = ?";
-
-        connection.setAutoCommit(false);
+        String sql = "DELETE FROM Disciplina WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, disciplina.getId());
             ps.executeUpdate();
         }
 
-        connection.commit();
-        connection.setAutoCommit(true);
         return true;
     }
 
+    // =========================
+    // Helper
+    // =========================
     private Disciplina mapDisciplina(ResultSet rs) throws SQLException {
         Disciplina disciplina = new Disciplina();
         disciplina.setId(rs.getInt("id"));
         disciplina.setNome_disciplina(rs.getString("nome_disciplina"));
+        disciplina.setProf_responsavel(rs.getInt("id_professor"));
         return disciplina;
     }
-
 }
