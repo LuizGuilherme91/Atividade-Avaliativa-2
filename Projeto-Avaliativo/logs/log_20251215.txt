@@ -1,0 +1,2 @@
+[2025-12-15 19:25:55] Erro ao atualizar aluno: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
+[2025-12-15 19:26:09] Erro ao criar Nota: Cannot invoke "java.util.Map.get(Object)" because "dados" is null
